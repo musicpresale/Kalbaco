@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kalbaco: Login/Register</title>
+</head>
+<body>
+  <h1>Register</h1>
+  <form id="registerForm">
+    Username: <input type="text" id="regUsername"><br>
+    Address: <input type="text" id="regAddress"><br>
+    <button type="submit">Register</button>
+  </form>
+  <h1>Login</h1>
+  <form id="loginForm">
+    Address: <input type="text" id="loginAddress"><br>
+    <button type="submit">Login</button>
+  </form>
+  <script>
+    document.getElementById('registerForm').onsubmit = async (e) => {
+      e.preventDefault();
+      let username = document.getElementById('regUsername').value;
+      let address = document.getElementById('regAddress').value;
+      let res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, address })
+      });
+      alert(await res.text());
+    };
+    document.getElementById('loginForm').onsubmit = async (e) => {
+      e.preventDefault();
+      let address = document.getElementById('loginAddress').value;
+      let res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address })
+      });
+      alert(await res.text());
+    };
+  </script>
+</body>
+</html>
